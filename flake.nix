@@ -31,6 +31,17 @@
       default = self.packages.${pkgs.system}.pinix;
     }));
 
+    apps = eachSystem (_:(pkgs: let
+      mkApp = name: {
+        type = "app";
+        program = "${pkgs.pinix}/bin/${name}";
       };
+    in {
+      pix = mkApp "pix";
+      pinix-replay = mkApp "pix-collect-garbage";
+      pixos-rebuild = mkApp "pixos-rebuild";
+      pix-collect-garbage = mkApp "pix-collect-garbage";
+      pix-shell = mkApp "pix-shell";
+    }));
   };
 }
